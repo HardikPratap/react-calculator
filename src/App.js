@@ -95,38 +95,45 @@ function reducer(state, { type, payload }) {
   }
 }
 
-function App() {
-  const[{ currentOperand , previousOperand, operation}, dispatch]= useReducer(Reducer,{})
-  dispatch({ type: ACTIONS.ADD_DIGIT, payload: {digit:1}})
+function evaluate({ currentOperand, previousOperand, operation }) {
+  const prev = parseFloat(previousOperand)
+  const current = parseFloat(currentOperand)
+  if (isNaN(prev) || isNaN(current)) return ""
+  let computation = ""
+  switch (operation) {
+    case "+":
+      computation = prev + current
+      break
+    case "-":
+      computation = prev - current
+      break
+    case "*":
+      computation = prev * current
+      break
+    case "÷":
+      computation = prev / current
+      break
+  }
 
-
-  return (
-    <div className='calculator-grid'>
-      <div className='output'>
-        <div className='previous-operand'>{previousOperand} {operation}</div>
-        <div className='current-operand'>{currentOperand}</div>
-      </div>
-      <button className='span-two'>AC</button>
-      <button>DEL</button>
-      <button>/</button>
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>+</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>-</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>*</button>
-      <button>.</button>
-      <button>0</button>
-      <button className='span-two'>=</button>
-
-    </div>
-  );
+  return computation.toString()
 }
+
+
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
+  maximumFractionDigits: 0,
+})
+function formatOperand(operand) {
+  if (operand == null) return
+  const [integer, decimal] = operand.split(".")
+  if (decimal == null) return INTEGER_FORMATTER.format(integer)
+  return `${INTEGER_FORMATTER.format(integer)}.${decimal}`
+}
+
+function App() {
+  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
+    reducer,
+    {}
+  )
+  
 
 export default App;
