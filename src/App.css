@@ -10,9 +10,9 @@ body{
 .calculator-grid{
   display: grid;
   margin-top: 2rem;
-  grid-template-columns: repeat(4,6rem);
+  grid-template-columns: repeat(4,6em);
   justify-content: center;
-  grid-template-rows: minma x(7rem,auto) repeat(5,6rem);
+  grid-template-rows: minmax(7rem,auto) repeat(5,6rem);
 }
 
 .calculator-grid > button{
@@ -40,9 +40,9 @@ body{
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-around;
-  padding: .75rem;
+  padding: 1.75rem;
   word-wrap: break-word;
-  word-wrap: break-all;
+  word-break: break-all;
 
 }
 
